@@ -9,3 +9,25 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+
+## End Laravel Defaults
+
+.DS_Store
+Thumbs.db
+*.lnk
+*.log
+*.tmp
+*~
+
+/.idea
+/.phpstorm*
+/.vscode
+/_ide_helper*
+/build/
+database.sqlite
+
+/.vagrant
+/after.sh
+/aliases
+/user-customizations.sh
+/Vagrantfile
