@@ -33,6 +33,13 @@ return [
 
     'connections' => [
 
+        'testing' => [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
+        ],
+
         'sqlite' => [
             'driver' => 'sqlite',
             'database' => base_path(env('DB_DATABASE', 'storage/database.sqlite')),
