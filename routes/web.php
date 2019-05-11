@@ -11,6 +11,10 @@
 |
 */
 
+// Home
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/customer');
 });
+
+// Customer Routes
+Route::resource('customer', 'CustomerController');

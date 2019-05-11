@@ -1,14 +1,33 @@
-
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
-// Variables
-@import 'variables';
-
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-vue/dist/bootstrap-vue.css';
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+html, body {
+  height: 100vh;
+}
+
+.hscroll-shadow {
+  background-image: linear-gradient(to right, white, white),
+  linear-gradient(to right, white, white),
+  linear-gradient(to right, rgba(0, 0, 0, .25), rgba(255, 255, 255, 0)),
+  linear-gradient(to left, rgba(0, 0, 0, .25), rgba(255, 255, 255, 0));
+  background-position: left center, right center, left center, right center;
+  background-repeat: no-repeat;
+  background-color: white;
+  background-size: 20px 100%, 20px 100%, 20px 100%, 20px 100%;
+  background-attachment: local, local, scroll, scroll;
+}
+
+#customers-table {
+  th, td {
+    vertical-align: middle;
+  }
+
+  td.address {
+    font-size: 0.9em;
+  }
+
+  td.active {
+    font-size: 1.5em;
+  }
 }
