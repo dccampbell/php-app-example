@@ -12,7 +12,19 @@ class CustomerController extends Controller
     /** Show the customer list. */
     public function index(): View
     {
-        return view('customer.index', ['customers' => Customer::all()->sortByDesc('updated_at')]);
+        $customers = Customer::all()->map(function (Customer $customer) {
+            return [
+                'id' => $customer->id,
+                'name' => $customer->name,
+                'email' => $customer->email,
+                'address' => "{$customer->street}\n{$customer->city}, {$customer->state} {$customer->zip}",
+                'updated' => $customer->updated_at->timestamp,
+                'updatedStr' => $customer->updated_at->diffForHumans(),
+                'active' => $customer->active,
+                'editUrl' => route('customer.edit', $customer->id),
+            ];
+        });
+        return view('customer.index', ['customers' => $customers->values()]);
     }
 
     /** Show the form for creating a new customer. */

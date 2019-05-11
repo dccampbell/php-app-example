@@ -25,9 +25,13 @@ html, body {
 
   td.address {
     font-size: 0.9em;
+    white-space: pre-line;
   }
-
   td.active {
     font-size: 1.5em;
+  }
+
+  .active, .actions {
+    text-align: center;
   }
 }

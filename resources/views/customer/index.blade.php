@@ -12,45 +12,55 @@
     </div>
 
     <div class="table-responsive-lg mt-3 hscroll-shadow">
-        <table id="customers-table" class="table table-striped">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Last Updated</th>
-                <th class="text-center">Active?</th>
-                <th class="text-center">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            @if (count($customers))
-                @foreach ($customers as $customer)
-                    <?php /** @var \App\Customer $customer */ ?>
-                    <tr>
-                        <td class="name">{{ $customer->name }}</td>
-                        <td class="email">{{ $customer->email }}</td>
-                        <td class="address">
-                            {{ $customer->street }}<br>
-                            {{ $customer->city }}, {{ $customer->state }} {{ $customer->zip }}
-                        </td>
-                        <td class="updated">{{ $customer->updated_at->diffForHumans() }}</td>
-                        <td class="active text-center">
-                            {!! $customer->active ? '&check;' : '&cross;' !!}
-                        </td>
-                        <td class="actions text-center">
-                            {!! link_to_route('customer.edit', 'Edit', [$customer->id],
-                                              ['class'=>'btn btn-outline-secondary']) !!}
-                        </td>
-                    </tr>
-                @endforeach
-            @else
-                <tr>
-                    <td colspan="100%">No customers matching your criteria.</td>
-                </tr>
-            @endif
-            </tbody>
-        </table>
+        <b-table id="customers-table" striped :fields="this.fields" :items="this.items"
+                 sort-by="updated" sort-desc="false" :per-page="perPage" :current-page="currentPage">
+
+            <template slot="updated" slot-scope="data">
+                @{{ data.item.updatedStr }}
+            </template>
+            <template slot="active" slot-scope="data">
+                @{{ data.item.active ? '&check;' : '&cross;' }}
+            </template>
+            <template slot="actions" slot-scope="data">
+                <a :href="data.item.editUrl" class="btn btn-outline-secondary">Edit</a>
+            </template>
+
+        </b-table>
     </div>
+
+    <div class="row">
+        <div class="col pr-0">
+            <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" align="right"></b-pagination>
+        </div>
+    </div>
+
+@endsection
+@section('scripts')
+
+    <script>
+        window.customers = {!! $customers !!};
+
+        const app = new Vue({
+            el: '#app',
+            data: {
+                perPage: 15,
+                currentPage: 1,
+                fields: [
+                    {key: 'name', sortable: true, class: 'name'},
+                    {key: 'email', sortable: true, class: 'email'},
+                    {key: 'address', sortable: false, class: 'address'},
+                    {key: 'updated', sortable: true, class: 'updated'},
+                    {key: 'active', sortable: true, class: 'active', label: 'Active?'},
+                    {key: 'actions', sortable: false, class: 'actions'}
+                ],
+                items: window.customers
+            },
+            computed: {
+                rows() {
+                    return this.items.length
+                }
+            }
+        });
+    </script>
 
 @endsection
